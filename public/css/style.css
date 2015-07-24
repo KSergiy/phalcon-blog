@@ -1,20 +1,8 @@
-@font-face {
-    font-family: FiraSansMedium;
-    src: local("Fira Sans Medium"),
-        url("/css/xs15nrae.eot") format("truetype"); /* EOT file for IE */
-}
-@font-face {
-    font-family: FiraSansMedium;
-    src: local("Fira Sans Medium"), 
-        url("/css/xs15nrae.ttf") format("truetype");
-}
 body {
     margin:0; padding:0;
     height: 100%;
     color: #444444; 
     font:normal 14px/20px serif, sans-serif;
-
-    background: url("/img/bg.gif") repeat; 
 }
 
 p { 
@@ -47,12 +35,6 @@ header {
     margin: 0 0 10px;
     border: 1px solid #92521c;
     overflow: hidden;
-    background: url("/img/header/h_bg_b_s.jpg") repeat-x; 
-    
-/*    background: url("/img/header/h_bg_b_.png") no-repeat; */
-}
-@media (max-width: 991px) {
-    .header-block { background: #EF9A4B; }
 }
 
 .header-block .navbar { margin: 0 !important; }
@@ -82,7 +64,6 @@ header {
     text-align: left;
     text-indent: 0.4em;
     color: #7D3706;
-    font-family: FiraSansMedium;
 }
 /* Left block of header with menus */
 
@@ -139,7 +120,6 @@ header {
     width: 93px;
     position: relative;
     z-index: 10;
-    background: url("/img/header/s_button.png") repeat; 
     font-size: 20px;
     color: #ffdcb2;
     padding-bottom: 1px;

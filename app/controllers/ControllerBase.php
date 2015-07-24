@@ -18,7 +18,7 @@ class ControllerBase extends Controller
         
         $this->tag->appendTitle(' - 3Dfreza');
         
-        $this->view->setTemplateAfter('main');
+        //$this->view->setTemplateAfter('main');
         
         //$staticPages = Pages::query()->where( 'type = 1' )->order( 'position' )->execute();
         
@@ -32,7 +32,7 @@ class ControllerBase extends Controller
     {
         // Add some local CSS resources
         $this->assets->collection('css')
-                ->addCss('css/app.min.css', true)
+                ->addCss('css/app.css', true)
                 ->addCss('css/style.css', true)
                 ->addCss('css/jquery.fancybox.css', true)
                 ->addCss('css/jquery.fancybox-thumbs.css', true)

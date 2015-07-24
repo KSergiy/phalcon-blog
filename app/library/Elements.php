@@ -4,50 +4,39 @@ use Phalcon\Mvc\User\Component;
 
 /**
  * Elements
- *
- * @author Пользователь
  */
 class Elements extends Component 
 {
+    private $_main_menu = [
+        'index' => [
+            'route' => 'home',
+            'title' => 'Home'
+        ],
+//        'pages' => [
+//            'route' => 'pages',
+//            'title' => 'Blocks'
+//        ],
+        'info' => [
+            'route' => 'info',
+            'title' => 'Info'
+        ],
+        'contacts' => [
+            'route' => 'contacts',
+            'title' => 'About me'
+        ],
+    ];
     
     public function getMenu()
     {
-        $_pages = new Pages();
+        echo '<ul class="nav navbar-nav">';
         
-        echo '<ul class="nav nav-justified">';
-        
-        echo '<li></li>';
-        
-        foreach ( $_pages->getCatalogPages() as $page ) 
+        foreach ( $this->_main_menu as $key => $page ) 
         {
-            $page_url = $this->dispatcher->getParam("page");
+            $action = $this->view->getActionName();
             
-            $class = ( $page_url == $page->name ) ? 'active' : '';
+            $class = ( $action == $key ) ? 'active' : '';
             
-            echo '<li class="', $class, '"  >' . $this->tag->linkTo( '/' . $page->name. '/', $page->PagesInfo->title) . '</li>';
-        
-            echo '<li></li>';
-        }
-        
-        echo '<li class="visible-xs-block">' . $this->tag->linkTo( '/shipment-payment/', 'Доставка и оплата') . '</li>';
-        
-        echo '<li class="visible-xs-block">' . $this->tag->linkTo( '/contacts/', 'Контакты') . '</li>';
-        
-        echo '</ul>';
-    }
-    
-    public function getFooterMenu()
-    {
-        $_pages = Pages::find(array(
-                    "conditions" => "footer = 1",
-                    'order'      => 'sort',
-                ));
-
-        echo '<ul class="nav navbar-nav pull-right">';
-        
-        foreach ($_pages as $page) 
-        {
-            echo '<li>' . $this->tag->linkTo( '/' . $page->name. '/', $page->PagesInfo->title) . '</li>';
+            echo '<li class="', $class, '"  >' . $this->tag->linkTo( [ ['for' => $page['route'], 'title' => $page['title'] ], $page['title'] ]) . '</li>';
         }
         
         echo '</ul>';
@@ -74,23 +63,4 @@ class Elements extends Component
 
         echo '</ul>';
     }
-    
-    public function getCatlog( $page, $name = NULL )
-    {
-        echo '<div class="nav-collapse sub-menu col-md-12">'
-            . '<ul class="nav navbar-nav">';
-          
-        foreach ($page->SubPages as $menu) 
-        {
-            $class = ( $name == $menu->url ) ? 'active' : '';
-            
-            echo "<li class='{$class}'>"
-                ."<a href = '/catalog/list/#{$menu->url}' >{$menu->PagesInfo->title}</a>"
-                ."</li>";
-        }
-        
-        echo '</ul>'
-            . '</div>';
-    }
-    
 }

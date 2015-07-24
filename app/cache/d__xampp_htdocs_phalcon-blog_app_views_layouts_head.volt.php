@@ -12,7 +12,7 @@
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
-                {{ elements.getMenu() }}
+                <?php echo $this->elements->getMenu(); ?>
             </div>
         </div>
     </nav>                

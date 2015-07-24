@@ -3,27 +3,27 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        {{ get_title() }}
+        <?php echo $this->tag->getTitle(); ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="{{ keywords }}" >
-        <meta name="description" content="{{ description }}" > 
+        <meta name="keywords" content="<?php echo $keywords; ?>" >
+        <meta name="description" content="<?php echo $description; ?>" > 
         <meta name="author" content="SergiCo">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type"></meta>
         <meta content="ru" http-equiv="Content-Language"></meta>
-        {{ get_title() }}
-        <link rel='canonical' href='{{ url~router.getRewriteUri() }}'/>
+        <?php echo $this->tag->getTitle(); ?>
+        <link rel='canonical' href='<?php echo $url . $this->router->getRewriteUri(); ?>'/>
         <link rel='shortcut icon' href='/img/favicon.ico' />
         <link rel='icon' href='/img/favicon.ico' />
-        {{ assets.outputCss('css') }}
+        <?php echo $this->assets->outputCss('css'); ?>
     </head>
     <body>
-        {{ partial("layouts/head") }}
+        <?php echo $this->partial('layouts/head'); ?>
         <div class="container">
-            {{ content() }}
+            <?php echo $this->getContent(); ?>
         </div>
-        {{ partial("layouts/footer") }}
+        <?php echo $this->partial('layouts/footer'); ?>
 
-        {{ assets.outputJs('js') }}
+        <?php echo $this->assets->outputJs('js'); ?>
     </body>
     <!-- Scripts -->
 </html>

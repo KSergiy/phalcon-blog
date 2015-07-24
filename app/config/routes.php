@@ -5,19 +5,24 @@
  */
 $router = new \Phalcon\Mvc\Router(false);
 
+$router->add("/", array(
+    'controller' => 'index',
+    'action'     => 'index'
+))->setName('home');
+
+$router->add("/about.html", array(
+    'controller' => 'info',
+    'action'     => 'info'
+))->setName('info');
+
+$router->add("/contacts.html", array(
+    'controller' => 'info',
+    'action'     => 'contacts'
+))->setName('contacts');
+
 $router->add("/search/search", array(
     'controller' => 'search',
     'action'     => 'search',
-));
-
-$router->add("/{page}[/]", array(
-    'controller' => 'index',
-    'action'     => 'index'
-));
-
-$router->add("/contacts/send/", array(
-    'controller' => 'info',
-    'action'     => 'send'
 ));
 
 $router->add("/sitemap/", array(
