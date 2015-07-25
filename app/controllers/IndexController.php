@@ -2,8 +2,9 @@
 
 class IndexController extends ControllerBase
 {
-    public function indexAction( $url = 'start' )
+    public function indexAction()
     {
+        /*
         $_page = new Pages();
         
         $page = $_page::findFirst(array(
@@ -11,7 +12,7 @@ class IndexController extends ControllerBase
                     "bind"       => array(1 => $url),
                     //"cache"      => array( "key" => 'catalog'.$url, "lifetime" => 172800 )
                 ));
-        
+        */
         parent::initialize();
     }
     

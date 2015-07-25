@@ -28,7 +28,7 @@ class Elements extends Component
     
     public function getMenu()
     {
-        echo '<ul class="nav navbar-nav">';
+        echo '<ul class="nav navbar-nav pull-right">';
         
         foreach ( $this->_main_menu as $key => $page ) 
         {

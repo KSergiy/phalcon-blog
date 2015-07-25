@@ -2,12 +2,9 @@
 
 class InfoController extends ControllerBase
 {
-    public function infoAction( $url )
+    public function infoAction()
     {
-        $page = Pages::findFirst(array(
-                    "conditions" => "url = ?1",
-                    "bind"       => array(1 => $url)
-                ));
+        $page = Pages::findFirst(array("conditions" => "url = 'info'"));
 
         if ( !empty( $page ) )
         {
@@ -22,16 +19,7 @@ class InfoController extends ControllerBase
                 'description'   => $page->PagesInfo->meta_descriptions,
                 'title'         => $page->PagesInfo->title,
                 'content'       => $page->PagesInfo->content,
-                'active'        => $url
             ));
-
-            if ( $url == 'contact' )
-            {
-                $this->view->form = new ContactForm;
-            }
-
-            $this->view->pick(array('info/'.$url));
-        
         }
         else
         {

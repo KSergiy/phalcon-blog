@@ -19,10 +19,17 @@
     <body>
         {{ partial("layouts/head") }}
         <div class="container">
-            {{ content() }}
+            <div class="row">
+                <div class="col-mg-9 col-lg-9">
+                    {{ partial("layouts/main") }}
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    {{ partial("layouts/left-block") }}
+                </div>
+            </div>
+            <div class="buffer"></div>
         </div>
         {{ partial("layouts/footer") }}
-
         {{ assets.outputJs('js') }}
     </body>
     <!-- Scripts -->
