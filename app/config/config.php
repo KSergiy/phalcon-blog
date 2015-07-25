@@ -6,9 +6,9 @@ return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
-        'username'    => 'retrobazar_base',
-        'password'    => 'winston',
-        'dbname'      => '3dfreza',
+        'username'    => '',
+        'password'    => '',
+        'dbname'      => '',
         'charset'     => 'utf8',
     ),
     'application' => array(
@@ -21,17 +21,17 @@ return new \Phalcon\Config(array(
         'formsDir'       => APP_PATH . '/app/forms/',
         'cacheDir'       => APP_PATH . '/app/cache/',
         'baseUri'        => '/',
-        'publicUrl'      => 'http://3dfreza.com.ua'
+        'publicUrl'      => ''
     ),
     'mail' => array(
-        'fromName' => '3Dfreza.com.ua',
-        'fromEmail' => 'info@tdp.com.ua',
+        'fromName' => '',
+        'fromEmail' => '',
         'smtp' => array(
             'server'	=> 'smtp.yandex.ua',
             'port'      => 465,
             'security'  => 'ssl',
-            'username'  => 'info@tdp.com.ua',
-            'password'  => 'tdp.com.ua',
+            'username'  => '',
+            'password'  => '',
         )
     ),
 ));
