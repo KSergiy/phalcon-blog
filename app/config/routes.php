@@ -15,6 +15,16 @@ $router->add("/about.html", array(
     'action'     => 'info'
 ))->setName('info');
 
+$router->add('/pages/{action}/', array(
+    'controller' => 'pages',
+    'action'     => 1
+));
+
+$router->add('/publications/{action}/', array(
+    'controller' => 'publications',
+    'action'     => 1
+));
+
 $router->add("/contacts.html", array(
     'controller' => 'info',
     'action'     => 'contacts'
@@ -35,7 +45,12 @@ $router->add("/filter/{action}.html", array(
     'action'     => 1
 ));
 
-$router->add("/login/{action}.html", array(
+$router->add("/login/", array(
+    'controller' => 'login',
+    'action'     => 'login'
+));
+
+$router->add("/login/{action}/", array(
     'controller' => 'login',
     'action'     => 1
 ));

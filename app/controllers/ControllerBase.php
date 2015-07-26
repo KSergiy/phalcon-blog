@@ -12,18 +12,26 @@ class ControllerBase extends Controller
         
         $expireDate->modify('+2 months');
 
+        if ( empty( $this->expireDate ) )
+        {
+            //$this->expireDate = new Time();
+        }
+
         $this->response->setHeader( 'Last-Modified', gmdate("D, d M Y H:i:s", strtotime($this->expireDate)) );
         
         $this->response->setExpires($expireDate);
         
-        $this->tag->appendTitle(' - 3Dfreza');
+        $this->tag->appendTitle(' - Jinsei');
         
         //$this->view->setTemplateAfter('main');
         
         //$staticPages = Pages::query()->where( 'type = 1' )->order( 'position' )->execute();
-        
+
+        //$auth = $this->session->get('auth-identity');
+
         $this->view->setVars(array(
-            'url'   => $this->config->application->publicUrl,
+            'url'  => $this->config->application->publicUrl,
+            'auth' => $this->session->get('auth-identity')
             //'staticMenu' => $staticPages,
         ));
     }

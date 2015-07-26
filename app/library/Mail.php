@@ -12,12 +12,12 @@ class Mail extends Component
 {
 	protected $_transport;
 
-        protected $config;
-        
-        function __construct( $config ) 
-        {
-            $this->config = $config;
-        }
+	protected $config;
+
+	function __construct( $config )
+	{
+		$this->config = $config;
+	}
         
 	/**
 	 * Applies a template to be used in the e-mail

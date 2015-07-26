@@ -10,18 +10,6 @@
                 </form>
             </div>
 
-            <div class="widget widget_search">
-                {{ form('login/login.html') }}
-                    <div>
-                        {{ text_field('email') }}
-
-                        {{ password_field('password') }}
-
-                        {{ submit_button('Login') }}
-                    </div>
-                </form>
-            </div>
-
             <div class="widget widget_label searchform">
                 <h2>
                     <span>

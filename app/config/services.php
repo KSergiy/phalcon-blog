@@ -13,6 +13,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Security;
 use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Forms\Manager as FormsManager;
@@ -20,6 +21,7 @@ use Phalcon\Cache\Frontend\Output as OutputFrontend;
 use Phalcon\Cache\Frontend\Data as FrontendData;
 use Phalcon\Cache\Backend\Memcache as BackendMemcache;
 
+//use phalcon-blog\Auth;
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
  */
@@ -67,7 +69,6 @@ $di->set('dispatcher', function() use ($di) {
         
 	return $dispatcher;
 });
-
 /**
  * The URL component is used to generate all kind of urls in the application
  */
@@ -146,6 +147,12 @@ $di->set('flash', function(){
 $di->set('elements', function(){
     return new Elements();
 });
+/**
+ * Register auth component
+ */
+$di->set('auth', function() {
+    return new Auth_Auth();
+});
 
 // Store it in the Di container
 $di->set('config', $config);
@@ -186,6 +193,16 @@ $di->set('viewCache', function() {
 
     return $cache;
 });
+/**
+ * Register security module
+ */
+$di->set('security', function() {
+    $security = new Security();
+
+    $security->setWorkFactor(12);
+
+    return $security;
+}, true);
 
 $di->set('forms', function() {
     return new FormsManager();
@@ -195,7 +212,7 @@ $di->set('forms', function() {
  * Mail service uses AmazonSES
  */
 $di->set('mail', function() use ($config) {
-        return new Mail( $config );
+    return new Mail( $config );
 });
 
 $di->set('router', function () {

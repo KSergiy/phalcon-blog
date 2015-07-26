@@ -1,7 +1,5 @@
 <?php
 
-use Phalcon\Validataion;
-
 /**
  * Created by PhpStorm.
  * User: Sergiy
@@ -12,73 +10,73 @@ use Phalcon\Validataion;
  */
 class LoginController extends ControllerBase
 {
-    private function _registerSession( $user )
+    public function loginAction()
     {
-        $this->session->set('auth', array(
-            'id' => $user->id,
-            'name' => $user->login
-        ));
-    }
+        $form = new LoginForm();
 
+        $this->view->setVar('loginForm', $form);
+
+        $this->tag->setTitle('Login');
+
+        parent::initialize();
+    }
     /**
      * Checks posted by user email and password. If all ok then log in user in other case - shows error message
      *
      * @return mixed
      */
-    public function loginAction()
+    public function authAction()
     {
-        if ($this->request->isPost() != true)
+        if ( $this->request->isPost() == true )
         {
-            //return $this->forward('/');
-        }
+            $form = new LoginForm();
 
-        $this->tag->setTitle( 'hi' );
-
-        $form = new LoginForm();
-
-        if ( !$form->isValid( $this->request->getPost() ) )
-        {
-            foreach ( $form->getMessages() as $key => $message )
+            if ( !$form->isValid( $this->request->getPost() ) )
             {
-                $this->flash->error( $message );
+                foreach ( $form->getMessages() as $key => $message ) {
+                    $this->flash->error($message);
+                }
+
+                return $this->dispatcher->forward(["controller" => "login", "action" => "login"]);
             }
 
-            print_r( $form->getMessages() );
+            $status = $this->auth->check([
+                'email' => $this->request->getPost('email'),
+                'password' => $this->request->getPost('password')
+            ]);
 
-            //return $this->dispatcher->forward(["action" => "info", 'params' => array('contact') ]);
-
-            //return $this->forward('/');
-        }
-
-        $this->tag->setTitle( 'hi' );
-
-        $email = $this->request->getPost('email');
-
-        $password = $this->request->getPost('password');
-
-        $user = Users::findFirst(array(
-            "(email = :email: OR login = :email:) AND status = '1'",
-            'bind' => array('email' => $email)
-        ));
-
-        if ( $user )
-        {
-            if ( $this->security->cackHash( $password, $user->password ) )
+            if ( $status )
             {
-                $this->_registerSession( $user );
+                return $this->response->redirect('index');
+            }
+            else
+            {
+                $this->flash->error('Wrong email/password');
+
+                return $this->dispatcher->forward(["controller" => "login", "action" => "login"]);
             }
         }
-
-        $this->flash->error('Wrong email/password');
+        return $this->response->redirect('index');
     }
 
+    public function logoutAction()
+    {
+        $this->auth->remove();
+
+        return $this->response->redirect('index');
+    }
+
+    /**
+     *  Register function
+     */
+    /*
     public function registerAction()
     {
         $user = new Users();
 
-        $login = $this->request->getPost('email');
+        $login = 'koblua.sergiy@gmail.com'; //$this->request->getPost('email');
 
-        $password = $this->request->getPost('password');
+        $password = 'Draco_05'; //$this->request->getPost('password');
 
         $user->login = $login;
 
@@ -88,4 +86,5 @@ class LoginController extends ControllerBase
 
         $user->save();
     }
+    */
 }
