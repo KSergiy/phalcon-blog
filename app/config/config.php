@@ -6,9 +6,9 @@ return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
-        'username'    => 'retrobazar_base',
-        'password'    => 'winston',
-        'dbname'      => 'jinsei',
+        'username'    => '',
+        'password'    => '',
+        'dbname'      => '',
         'charset'     => 'utf8',
     ),
     'application' => array(
@@ -25,14 +25,14 @@ return new \Phalcon\Config(array(
         'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
     ),
     'mail' => array(
-        'fromName' => '3Dfreza.com.ua',
-        'fromEmail' => 'info@tdp.com.ua',
+        'fromName' => '',
+        'fromEmail' => '',
         'smtp' => array(
             'server'	=> 'smtp.yandex.ua',
             'port'      => 465,
             'security'  => 'ssl',
-            'username'  => 'info@tdp.com.ua',
-            'password'  => 'tdp.com.ua',
+            'username'  => '',
+            'password'  => '',
         )
     ),
 ));
