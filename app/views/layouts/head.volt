@@ -16,6 +16,9 @@
                     Jinsei
                 </div>
                 {{ elements.getMenu() }}
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="">login</a></li>
+                </ul>
             </div>
         </div>
     </nav>                

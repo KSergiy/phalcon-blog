@@ -4,6 +4,8 @@ class IndexController extends ControllerBase
 {
     public function indexAction()
     {
+        $this->view->setVar('loginForm', new LoginForm());
+
         /*
         $_page = new Pages();
         

@@ -15,6 +15,7 @@ use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Forms\Manager as FormsManager;
 use Phalcon\Cache\Frontend\Output as OutputFrontend;
 use Phalcon\Cache\Frontend\Data as FrontendData;
 use Phalcon\Cache\Backend\Memcache as BackendMemcache;
@@ -184,6 +185,10 @@ $di->set('viewCache', function() {
     ));
 
     return $cache;
+});
+
+$di->set('forms', function() {
+    return new FormsManager();
 });
 
 /**

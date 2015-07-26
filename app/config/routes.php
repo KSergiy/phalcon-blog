@@ -35,4 +35,9 @@ $router->add("/filter/{action}.html", array(
     'action'     => 1
 ));
 
+$router->add("/login/{action}.html", array(
+    'controller' => 'login',
+    'action'     => 1
+));
+
 return $router;
