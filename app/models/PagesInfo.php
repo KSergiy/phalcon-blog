@@ -6,16 +6,20 @@ class PagesInfo extends Model {
 
     public $id;
 
+    public $page_id;
+
     public $title;
-    
+
     public $content;
+
+    public $meta_title;
+
+    public $meta_keywords;
     
-    public $keywords;
-    
-    public $description;
+    public $meta_description;
     
     public function getSource()
     {
-        return "pages_trans";
+        return "pages_info";
     }
 }

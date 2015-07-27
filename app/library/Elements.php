@@ -76,8 +76,8 @@ class Elements extends Component
 
         $auth = $this->session->get('auth-identity');
 
-        if ( $auth )
-        {
+        //if ( $auth )
+        //{
             foreach ( $this->_admin_menu as $key => $page )
             {
                 $action = $this->view->getActionName();
@@ -112,7 +112,7 @@ class Elements extends Component
                     echo '<li class="', $class, '"  >' . $this->tag->linkTo( $page['route'], $page['title']) . '</li>';
                 }
             }
-        }
+        //}
 
         echo '</ul>';
     }

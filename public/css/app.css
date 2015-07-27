@@ -6200,7 +6200,7 @@ label,
 
 .up_arrow:before {
   top: -31px;
-  border-color: transparent transparent #DDD;
+  border-color: transparent transparent #DDD !important;
 }
 
 .up_arrow:before,

@@ -28,6 +28,18 @@
                 </div>
 
                 <div class="form-group">
+                    {{ flash.has('lang') ? flash.output('lang') : '' }}
+                    {{ createForm.label('lang') }}
+                    {{ createForm.render('lang') }}
+                </div>
+
+                <div class="form-group">
+                    {{ flash.has('location') ? flash.output('location') : '' }}
+                    {{ createForm.label('location') }}
+                    {{ createForm.render('location') }}
+                </div>
+
+                <div class="form-group">
                     {{ flash.has('content') ? flash.output('content') : '' }}
                     {{ createForm.label('content') }}
                     {{ createForm.render('content') }}
@@ -52,3 +64,5 @@
         </div>
     </div>
 </div>
+
+{{ javascript_include("js/tinymce/tinymce.min.js") }}

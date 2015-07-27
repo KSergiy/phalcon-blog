@@ -18,8 +18,24 @@ class Pages_CreateForm extends Form
         '2' => 'Catalog'
     ];
 
+    private $_langs = [
+        '0' => 'en',
+        '1' => 'ua',
+        '3' => 'ru'
+    ];
+
+    private $_locations = [
+        '0' => 'Main page'
+    ];
+
     public function initialize($entity = null, $options = null)
     {
+        $pages = Pages::getCatalogPages();
+
+        foreach ( $pages as $page ) {
+            $this->_locations[ $page->id ] = $page->PagesInfo->title;
+        }
+
         $this->setAction('pages/add/');
 
         // Name
@@ -47,7 +63,15 @@ class Pages_CreateForm extends Form
         $types->setLabel('Type');
         $this->add($types);
 
-        $content = new TextArea('content', array( 'class' => 'form-control') );
+        $langs = new Select( 'lang', $this->_langs, array( 'class' => 'form-control') );
+        $langs->setLabel('Lang');
+        $this->add( $langs );
+
+        $pages = new Select( 'location', $this->_locations, array( 'class' => 'form-control') );
+        $pages->setLabel('Location');
+        $this->add( $pages );
+
+        $content = new TextArea('content', array( 'class' => 'form-control', 'id' => 'areacontent') );
         $content->setLabel('Content');
         $content->setFilters(array('striptags', 'string'));
         $content->addValidators(array(

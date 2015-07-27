@@ -1,3 +1,10 @@
-$(window).bind("load", function() {
+$(function() {
+
+    if ( $('body').has( '#areacontent' ) )
+    {
+        tinymce.init({
+            selector: "#areacontent"
+        });
+    }
 
 });
