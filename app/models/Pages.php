@@ -6,39 +6,34 @@ class Pages extends Model {
 
     public $id;
 
-    public $url;
+    public $name;
+
+    public $type;
 
     public $status;
 
-    public $type;
-    
     public $position;
-    
+
     public $location;
-    
+
+    public $page_id;
+
     public $updated_at;
     
     public function initialize()
     {
-        $this->hasOne("token", "PagesInfo", "page_token");
+        $this->hasOne("id", "PagesInfo", "page_id");
         
-        $this->hasMany("id", "Items", "owner_id");
+        //$this->hasMany("id", "Items", "owner_id");
         
-        $this->hasMany("token", "Images", "token");
+        //$this->hasMany("id", "Images", "page_id");
     }
-    
-    public function getSortedImages()
-    {
-        return $this->getRelated('Images', array(
-            'order' => 'sort ASC'
-        ));
-    }
-    
+
     public function getCatalogPages()
     {
         return Pages::find(array(
-                    "conditions" => "section_id = 0 AND enabled = 1 AND type = 3",
-                    'order'      => 'sort',
+                    "conditions" => "page_id = 0 AND type = 2",
+                    'order'      => 'position',
                 ));
     }
     
