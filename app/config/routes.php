@@ -15,9 +15,23 @@ $router->add("/about.html", array(
     'action'     => 'info'
 ))->setName('info');
 
-$router->add('/pages/{action}/', array(
+$router->add("/admin/", array(
+    'controller' => 'admin',
+    'action'     => 'admin'
+))->setName('admin');
+
+$router->add('/pages/{action}/{id}', array(
     'controller' => 'pages',
-    'action'     => 1
+    'action'     => 1,
+    'id'         => 2,
+    'lang'       => 3
+));
+
+$router->add('/pages/{action}/{id}/{lang}', array(
+    'controller' => 'pages',
+    'action'     => 1,
+    'id'         => 2,
+    'lang'       => 3
 ));
 
 $router->add('/publications/{action}/', array(

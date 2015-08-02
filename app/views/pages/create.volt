@@ -6,58 +6,59 @@
                     Create new page
                 </h1>
 
-                {{ form( 'action' : createForm.getAction() ) }}
+                {{ form( 'action' : pageForm.getAction() ) }}
                 {{ flash.output() }}
 
                 <div class="form-group">
                     {{ flash.has('title') ? flash.output('title') : '' }}
-                    {{ createForm.label('title') }}
-                    {{ createForm.render('title') }}
+                    {{ pageForm.label('title') }}
+                    {{ pageForm.render('title') }}
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('name') ? flash.output('name') : '' }}
-                    {{ createForm.label('name') }}
-                    {{ createForm.render('name') }}
+                    {{ pageForm.label('name') }}
+                    {{ pageForm.render('name') }}
+                    <button type="button" onclick="convert2EN('title', 'name')" class="btn btn-default">Generate</button>
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('type') ? flash.output('type') : '' }}
-                    {{ createForm.label('type') }}
-                    {{ createForm.render('type') }}
+                    {{ pageForm.label('type') }}
+                    {{ pageForm.render('type') }}
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('lang') ? flash.output('lang') : '' }}
-                    {{ createForm.label('lang') }}
-                    {{ createForm.render('lang') }}
+                    {{ pageForm.label('lang') }}
+                    {{ pageForm.render('lang') }}
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('location') ? flash.output('location') : '' }}
-                    {{ createForm.label('location') }}
-                    {{ createForm.render('location') }}
+                    {{ pageForm.label('location') }}
+                    {{ pageForm.render('location') }}
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('content') ? flash.output('content') : '' }}
-                    {{ createForm.label('content') }}
-                    {{ createForm.render('content') }}
+                    {{ pageForm.label('content') }}
+                    {{ pageForm.render('content') }}
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('metaDescription') ? flash.output('metaDescription') : '' }}
-                    {{ createForm.label('metaDescription') }}
-                    {{ createForm.render('metaDescription') }}
+                    {{ pageForm.label('metaDescription') }}
+                    {{ pageForm.render('metaDescription') }}
                 </div>
 
                 <div class="form-group">
                     {{ flash.has('metaKeywords') ? flash.output('metaKeywords') : '' }}
-                    {{ createForm.label('metaKeywords') }}
-                    {{ createForm.render('metaKeywords') }}
+                    {{ pageForm.label('metaKeywords') }}
+                    {{ pageForm.render('metaKeywords') }}
                 </div>
 
-                {{ createForm.render('create') }}
+                {{ pageForm.render('create') }}
                 </form>
                 <div class="clearfix"></div>
             </div>

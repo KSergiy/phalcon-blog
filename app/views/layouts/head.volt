@@ -13,9 +13,11 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
                 <div class="col-lg-4 col-md-5 logo">
-                    Jinsei
+                    <a href="/">Jinsei</a>
                 </div>
-                {{ elements.getMenu() }}
+                <ul class="nav navbar-nav pull-right">
+                    {{ elements.getBaseMenu() }}
+                </ul>
             </div>
         </div>
     </nav>                

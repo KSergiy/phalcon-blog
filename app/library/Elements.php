@@ -24,6 +24,10 @@ class Elements extends Component
             'route' => 'contacts',
             'title' => 'About me'
         ],
+        'admin' => [
+            'route' => 'admin',
+            'title' => 'Admin'
+        ],
     ];
 
     private $_admin_menu = [
@@ -54,67 +58,61 @@ class Elements extends Component
                     'title' => 'List publications'
                 ]
             ]
-        ],
-        'logout' => [
-            'route' => 'login/logout/',
-            'title' => 'Logout',
         ]
     ];
-    
-    public function getMenu()
+
+    public function getBaseMenu()
     {
-        echo '<ul class="nav navbar-nav pull-right">';
-        
-        foreach ( $this->_main_menu as $key => $page ) 
+
+        $_pages = Pages::getLocalizationPages( 'en', 1 );
+
+        foreach ( $_pages as $key => $page )
         {
             $action = $this->view->getActionName();
-            
+
             $class = ( $action == $key ) ? 'active' : '';
-            
-            echo '<li class="', $class, '"  >' . $this->tag->linkTo( [ ['for' => $page['route'], 'title' => $page['title'] ], $page['title'] ]) . '</li>';
+
+            echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'catalog/' . $page->name . '/', $page->Info->title ) . '</li>';
         }
 
+        echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'admin', 'Admin' ) . '</li>';
+
+    }
+
+    public function getAdminMenu()
+    {
         $auth = $this->session->get('auth-identity');
 
-        //if ( $auth )
+        //if ( !$auth )
         //{
-            foreach ( $this->_admin_menu as $key => $page )
-            {
-                $action = $this->view->getActionName();
-
-                $class = ( $action == $key ) ? 'active' : '';
-
-                if ( isset( $page['sub'] ) )
-                {
-                    echo '<li class="',$class,' dropdown" >';
-                    echo $this->tag->linkTo(
-                            [
-                                '#',
-                                $page['title'],
-                                'class' => 'dropdown-toggle',
-                                'data-toggle' => 'dropdown'
-                            ]
-                        );
-
-                    echo "<ul class='dropdown-menu'>";
-
-                    foreach ( $page['sub'] as $sub_page )
-                    {
-                        echo '<li>' . $this->tag->linkTo( $sub_page['route'], $sub_page['title']) . '</li>';
-                    }
-
-                    echo "</ul>";
-
-                    echo '</li>';
-                }
-                else
-                {
-                    echo '<li class="', $class, '"  >' . $this->tag->linkTo( $page['route'], $page['title']) . '</li>';
-                }
-            }
+        //    return NULL;
         //}
 
-        echo '</ul>';
+        foreach ( $this->_admin_menu as $key => $page )
+        {
+            $action = $this->view->getActionName();
+
+            $class = ( $action == $key ) ? 'active' : '';
+
+            if ( isset( $page['sub'] ) )
+            {
+                echo '<li class="',$class,' dropdown" >';
+                echo $this->tag->linkTo( ['#', $page['title'], 'class' => 'dropdown-toggle', 'data-toggle' => 'dropdown' ] );
+
+                echo "<ul class='dropdown-menu'>";
+                foreach ( $page['sub'] as $sub_page )
+                {
+                    echo '<li>' . $this->tag->linkTo( $sub_page['route'], $sub_page['title']) . '</li>';
+                }
+                echo "</ul>";
+
+                echo '</li>';
+            }
+            else
+            {
+                echo '<li class="', $class, '"  >' . $this->tag->linkTo( $page['route'], $page['title']) . '</li>';
+            }
+        }
     }
     
     public function getSubMenu( $id )
@@ -129,11 +127,7 @@ class Elements extends Component
 
         foreach( $_subCatalog as $item )
         {
-            echo '<li>';
-
-            echo $this->tag->linkTo( '/catalog/' . $item->url . '/', $item->PagesInfo->title );
-
-            echo '</li>';
+            echo '<li>' . $this->tag->linkTo( '/catalog/' . $item->url . '/', $item->PagesInfo->title ) . '</li>';
         }
 
         echo '</ul>';

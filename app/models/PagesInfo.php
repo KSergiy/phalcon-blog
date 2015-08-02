@@ -17,9 +17,14 @@ class PagesInfo extends Model {
     public $meta_keywords;
     
     public $meta_description;
-    
+
+    public function initialize()
+    {
+        $this->hasOne("id", "PagesLangs", "info_id");
+    }
+
     public function getSource()
     {
-        return "pages_info";
+        return "Page_Info";
     }
 }

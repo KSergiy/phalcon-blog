@@ -1,10 +1,13 @@
 <?php
 
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Dispatcher;
 
 class ControllerBase extends Controller
 {
     public $expireDate;
+
+    public $authStatus = FALSE;
 
     protected function initialize( )
     {
@@ -23,7 +26,7 @@ class ControllerBase extends Controller
         
         $this->tag->appendTitle(' - Jinsei');
         
-        //$this->view->setTemplateAfter('main');
+        $this->view->setTemplateAfter('main');
         
         //$staticPages = Pages::query()->where( 'type = 1' )->order( 'position' )->execute();
 
@@ -36,8 +39,18 @@ class ControllerBase extends Controller
         ));
     }
     
-    protected function beforeExecuteRoute( $dispatcher ) 
+    protected function beforeExecuteRoute( Dispatcher $dispatcher )
     {
+        /*
+        $this->authStatus = $this->session->get('auth-identity');
+
+        $controllerName = $dispatcher->getControllerName();
+
+        if ( !$this->authStatus && $controllerName == 'pages' )
+        {
+            $this->dispatcher->forward(array('controller' => 'index', 'action' => 'index'));
+        }
+*/
         // Add some local CSS resources
         $this->assets->collection('css')
                 ->addCss('css/app.css', true)
@@ -50,8 +63,8 @@ class ControllerBase extends Controller
         $this->assets
                 ->collection('js')
                 ->addJs('js/jquery-1.11.2.min.js', true)
-                ->addJs('js/jquery-migrate-1.2.1.min.js', true)
-                ->addJs('js/jquery-ui.min.js', true)
+                //->addJs('js/jquery-migrate-1.2.1.min.js', true)
+                //->addJs('js/jquery-ui.min.js', true)
                 ->addJs('js/bootstrap.min.js', true)
                 ->addJs('js/app.js', true)
                 ->join( true )

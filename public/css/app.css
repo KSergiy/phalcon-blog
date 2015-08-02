@@ -29,6 +29,26 @@ body {
   box-shadow: 0 1px 1px rgba(0,0,0,0.02);
 }
 
+.admin-head {
+  display: block;
+  height: 48px;
+  background: #FFFFFF;
+  margin-top: -60px;
+  margin-bottom: 20px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.02);
+  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.02);
+}
+
+.admin-head .navbar-nav > li > a {
+  padding: 10px 15px;
+}
+.admin-head .navbar-nav > li > a.btn-danger {
+  color: #FFF;
+}
+
 .footer {
   line-height: 30px;
   padding: 25px 0 20px 0;
@@ -2029,8 +2049,7 @@ th {
 }
 .table > thead > tr > th {
   vertical-align: bottom;
-  border-bottom: 2px solid #92521c;
-  text-align: center;
+  border-bottom: 2px solid #eee;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
@@ -3045,14 +3064,14 @@ fieldset[disabled] .btn-link:focus {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 0px;
 }
 .btn-xs,
 .btn-group-xs > .btn {
   padding: 1px 5px;
   font-size: 12px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 0px;
 }
 .btn-block {
   display: block;
@@ -6152,6 +6171,9 @@ label,
   margin-bottom: 20px;
   padding: 20px 10px 10px;
 }
+
+.post .btn-danger { color: #fff !important; }
+.post .btn-primary { color: #fff !important; }
 
 .page-content form {
   margin: 10px;

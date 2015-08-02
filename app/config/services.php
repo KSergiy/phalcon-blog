@@ -21,6 +21,7 @@ use Phalcon\Cache\Frontend\Output as OutputFrontend;
 use Phalcon\Cache\Frontend\Data as FrontendData;
 use Phalcon\Cache\Backend\Memcache as BackendMemcache;
 
+
 //use phalcon-blog\Auth;
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework

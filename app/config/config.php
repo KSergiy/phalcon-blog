@@ -8,7 +8,7 @@ return new \Phalcon\Config(array(
         'host'        => 'localhost',
         'username'    => '',
         'password'    => '',
-        'dbname'      => '',
+        'dbname'      => 'jinsei',
         'charset'     => 'utf8',
     ),
     'application' => array(
