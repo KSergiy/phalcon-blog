@@ -26,12 +26,28 @@ class Pages extends Model {
         $this->hasMany("id", "PagesLangs", "page_id");
 
         $this->hasOne("id", "PagesLangs", "page_id",
-            array( "alias" => "Local"
+            array( "alias" => "Lang"
         ));
 
         $this->hasOne("id", "PagesInfo", "page_id", array( "alias" => 'Info' ));
 
         //$this->hasMany("id", "Images", "page_id");
+    }
+
+    public function getInfo( $lang = 'en' )
+    {
+        return $this->getRelated('Info', array(
+            "conditions" => "lang_name = ?1",
+            "bind"       => array(1 => $lang),
+        ));
+    }
+
+    public function getLang( $lang )
+    {
+        return $this->getRelated('Lang', array(
+            "conditions" => "lang_id = ?1",
+            "bind"       => array( 1 => $lang ),
+        ));
     }
 
     public function getLocalizationPages( $lang, $type )
@@ -46,6 +62,42 @@ class Pages extends Model {
             ->andWhere( 'lang_name = :lang: ', array( 'lang' => $lang )  )
             ->getQuery()
             ->execute();
+    }
+
+    public function getPage( $id, $lang )
+    {
+        $builder = new Phalcon\Mvc\Model\Query\Builder();
+
+        //try {
+
+            /*
+                SELECT * FROM `Pages`
+                LEFT JOIN Pages_Lang ON Pages.id = Pages_Lang.page_id
+                LEFT JOIN Lang ON Pages_Lang.lang_id = Lang.id
+                LEFT JOIN Page_Info ON Page_Info.id = Pages_Lang.info_id
+                WHERE
+                Page_Info.page_id = '9'
+                AND
+                lang_name = 'ru'
+             */
+
+            $result = $builder->from('Pages')
+                ->leftJoin( 'PagesLangs', 'Pages.id = PagesLangs.page_id' )
+                ->leftJoin( 'PagesInfo', 'PagesInfo.id = PagesLangs.info_id' )
+                ->where( 'PagesInfo.page_id = :id:', array( 'id' => $id ))
+                ->andWhere( "PagesLangs.lang_id = :lang:", array( 'lang' => 2 ) )
+                ->getQuery()
+                ->getSingleResult();
+
+            return $result;
+        //}
+        //catch ( Exception $e )
+        //{
+            //$logger = new Phalcon\Logger\Adapter\File(APP_PATH . "/app/logs/db.log");
+            //$logger->error("Section: Pages/CreateForm; Error:" . $e->getMessage() );
+
+            //return false;
+        //}
     }
 
     public function getStaticPages()

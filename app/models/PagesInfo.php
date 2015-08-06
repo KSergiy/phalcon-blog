@@ -21,6 +21,8 @@ class PagesInfo extends Model {
     public function initialize()
     {
         $this->hasOne("id", "PagesLangs", "info_id");
+
+        $this->belongsTo('page_id', 'Pages', 'id');
     }
 
     public function getSource()

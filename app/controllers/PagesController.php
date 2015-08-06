@@ -87,26 +87,47 @@ class PagesController extends ControllerAdmin
     {
         $this->tag->setTitle('Edit page');
 
-        $pageDB = Pages::findFirst( $idGet );
+        $lang = Langs::findFirst(array(
+            "conditions" => "lang_name = ?1",
+            "bind"       => array(1 => $langGet),
+            //"cache"      => array( "key" => 'catalog'.$url, "lifetime" => 172800 )
+        ));
+/*
+        $info = PagesInfo::findFirst (array(
+                'conditions' => 'PagesLangs.lang_id = ?1 AND PagesLangs.page_id = ?2',
+                'bind'  => array( 1 => $lang->id, 2 => $idGet )
+            ));
+        /*
+        $info = PagesLangs::findFirst(array(
+            "conditions" => "Langs.lang_name = ?1 AND page_id = ?2",
+            "bind"       => array(1 => $lang->id, 2 => $idGet)
+        ));
+        */
+        $pageDB = Pages::findFirst( 'id = ' . $idGet );
+
+//        $pageDB = Pages::getPage( $idGet, '2' );
+
+        echo '<pre>';
+
+        //print_r( $pageDB );
+
+        $langs = $pageDB->getRelated( 'PagesLangs', [
+            'conditions' => 'lang_id = ' . $lang->id . ''
+        ] )->getFirst;
+
+        print_r( $langs->id );
+
+        //print_r( $pageDB->Langs->id );
+
+        //print_r( $pageDB->Info->title );
+        echo '</pre>';
+        exit();
 
         if ( $pageDB != false )
         {
-            $langDB = PagesLangs::findFirst(array(
-                'conditions' => 'page_id = ?1 AND lang_id = ?2',
-                'bind'  => array( 1 => $idGet, 2 => $langGet )
-            ));
-
-            $infoDB = PagesInfo::findFirst(array(
-                "conditions" => "id = ?1",
-                "bind"       => array( 1 => $langDB->info_id ),
-                //"cache"      => array( "key" => 'catalog'.$url, "lifetime" => 172800 )
-            ));
-
             $this->view->setVars(
                 array(
                     'page' => $pageDB,
-                    'info' => $infoDB,
-                    'lang' => $langGet,
                     'pageForm' => new Pages_PagesForm( $pageDB, true )
                 )
             );

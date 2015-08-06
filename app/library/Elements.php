@@ -72,10 +72,10 @@ class Elements extends Component
 
             $class = ( $action == $key ) ? 'active' : '';
 
-            echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'catalog/' . $page->name . '/', $page->Info->title ) . '</li>';
+            echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'catalog/' . $page->name . '.html', $page->Info->title ) . '</li>';
         }
 
-        echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'admin', 'Admin' ) . '</li>';
+        echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'admin/', 'Admin' ) . '</li>';
 
     }
 

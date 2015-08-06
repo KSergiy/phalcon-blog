@@ -30,6 +30,7 @@ $di = new FactoryDefault();
 /**
  * We register the events manager
  */
+
 $di->set('dispatcher', function() use ($di) {
 	$eventsManager = new EventsManager;
 	/**
@@ -40,6 +41,7 @@ $di->set('dispatcher', function() use ($di) {
 	/**
 	 * Handle exceptions and not-found exceptions using NotFoundPlugin
 	 */
+    /*
 	$eventsManager->attach('dispatch:beforeException', 
         function($event, $dispatcher, $exception) {
             switch ( $exception->getCode() ) {
@@ -64,12 +66,14 @@ $di->set('dispatcher', function() use ($di) {
                     break;
             }
         });
-        
+        */
 	$dispatcher = new Dispatcher;
 	$dispatcher->setEventsManager($eventsManager);
         
 	return $dispatcher;
+
 });
+
 /**
  * The URL component is used to generate all kind of urls in the application
  */
