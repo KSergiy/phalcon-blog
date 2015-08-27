@@ -6,8 +6,8 @@ return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
-        'username'    => 'retrobazar_base',
-        'password'    => 'winston',
+        'username'    => '',
+        'password'    => '',
         'dbname'      => 'jinsei',
         'charset'     => 'utf8',
     ),
