@@ -55,49 +55,44 @@ class Pages extends Model {
         $builder = new Phalcon\Mvc\Model\Query\Builder();
 
         return $builder->from('Pages')
-            ->join( 'PagesLangs', 'Pages.id = PagesLangs.page_id' )
-            ->join( 'Langs', 'PagesLangs.lang_id = Langs.id' )
-            ->join( 'PagesInfo', 'PagesInfo.id = PagesLangs.info_id' )
-            ->where('location = 0 AND type = :type:', array( 'type' => $type ))
+            ->columns( 'Pages.id, name, title' )
+            ->leftJoin( 'PagesLangs', 'Pages.id = PagesLangs.page_id' )
+            ->leftJoin( 'Langs', 'PagesLangs.lang_id = Langs.id' )
+            ->leftJoin( 'PagesInfo', 'PagesInfo.id = PagesLangs.info_id' )
+            ->where('location = 0')
+            //->andWhere( 'type = :type:', array( 'type' => $type ) )
             ->andWhere( 'lang_name = :lang: ', array( 'lang' => $lang )  )
             ->getQuery()
             ->execute();
+    }
+
+    public function getPageByName( $name, $lang = 'en' )
+    {
+        $builder = new Phalcon\Mvc\Model\Query\Builder();
+
+        return $builder->from('Pages')
+            ->columns( ' Pages.id as id, name, title, type, PagesLangs.lang_id as lang_id, location, content, meta_description, meta_keywords' )
+            ->leftJoin( 'PagesLangs', 'Pages.id = PagesLangs.page_id' )
+            ->leftJoin( 'PagesInfo', 'PagesInfo.id = PagesLangs.info_id' )
+            ->leftJoin( 'Langs', 'PagesLangs.lang_id = Langs.id' )
+            ->where( 'Pages.name = :name:', array( 'name' => $name ))
+            ->andWhere( "lang_name = :lang:", array( 'lang' => $lang ) )
+            ->getQuery()
+            ->getSingleResult();
     }
 
     public function getPage( $id, $lang )
     {
         $builder = new Phalcon\Mvc\Model\Query\Builder();
 
-        //try {
-
-            /*
-                SELECT * FROM `Pages`
-                LEFT JOIN Pages_Lang ON Pages.id = Pages_Lang.page_id
-                LEFT JOIN Lang ON Pages_Lang.lang_id = Lang.id
-                LEFT JOIN Page_Info ON Page_Info.id = Pages_Lang.info_id
-                WHERE
-                Page_Info.page_id = '9'
-                AND
-                lang_name = 'ru'
-             */
-
-            $result = $builder->from('Pages')
-                ->leftJoin( 'PagesLangs', 'Pages.id = PagesLangs.page_id' )
-                ->leftJoin( 'PagesInfo', 'PagesInfo.id = PagesLangs.info_id' )
-                ->where( 'PagesInfo.page_id = :id:', array( 'id' => $id ))
-                ->andWhere( "PagesLangs.lang_id = :lang:", array( 'lang' => 2 ) )
-                ->getQuery()
-                ->getSingleResult();
-
-            return $result;
-        //}
-        //catch ( Exception $e )
-        //{
-            //$logger = new Phalcon\Logger\Adapter\File(APP_PATH . "/app/logs/db.log");
-            //$logger->error("Section: Pages/CreateForm; Error:" . $e->getMessage() );
-
-            //return false;
-        //}
+        return $builder->from('Pages')
+            ->columns( ' Pages.id as id, name, title, type, PagesLangs.lang_id as lang_id, location, content, meta_description, meta_keywords' )
+            ->leftJoin( 'PagesLangs', 'Pages.id = PagesLangs.page_id' )
+            ->leftJoin( 'PagesInfo', 'PagesInfo.id = PagesLangs.info_id' )
+            ->where( 'PagesInfo.page_id = :id:', array( 'id' => $id ))
+            ->andWhere( "PagesLangs.lang_id = :lang:", array( 'lang' => $lang ) )
+            ->getQuery()
+            ->getSingleResult();
     }
 
     public function getStaticPages()

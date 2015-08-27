@@ -7,29 +7,6 @@ use Phalcon\Mvc\User\Component;
  */
 class Elements extends Component 
 {
-    private $_main_menu = [
-        'index' => [
-            'route' => 'home',
-            'title' => 'Home'
-        ],
-//        'pages' => [
-//            'route' => 'pages',
-//            'title' => 'Blocks'
-//        ],
-        'info' => [
-            'route' => 'info',
-            'title' => 'Info'
-        ],
-        'contacts' => [
-            'route' => 'contacts',
-            'title' => 'About me'
-        ],
-        'admin' => [
-            'route' => 'admin',
-            'title' => 'Admin'
-        ],
-    ];
-
     private $_admin_menu = [
         'pages' => [
             'route' => 'pages',
@@ -63,20 +40,24 @@ class Elements extends Component
 
     public function getBaseMenu()
     {
-
         $_pages = Pages::getLocalizationPages( 'en', 1 );
+
+        //$action = $this->view->getActionName();
+
+        $action = $this->request->getQuery("user_email");
+
+        $class = ( $action == '' ) ? 'active' : '';
+
+        echo '<li class="', $class, '"  >' . $this->tag->linkTo( '', 'Main' ) . '</li>';
 
         foreach ( $_pages as $key => $page )
         {
-            $action = $this->view->getActionName();
+            $class = ( $action == $page->name ) ? 'active' : '';
 
-            $class = ( $action == $key ) ? 'active' : '';
-
-            echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'catalog/' . $page->name . '.html', $page->Info->title ) . '</li>';
+            echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'page/' . $page->name . '.html', $page->title ) . '</li>';
         }
 
         echo '<li class="', $class, '"  >' . $this->tag->linkTo( 'admin/', 'Admin' ) . '</li>';
-
     }
 
     public function getAdminMenu()

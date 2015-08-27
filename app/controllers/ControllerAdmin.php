@@ -2,8 +2,9 @@
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Http\Response;
 
-class ControllerBase extends Controller
+class ControllerAdmin extends Controller
 {
     public $expireDate;
 
@@ -15,6 +16,8 @@ class ControllerBase extends Controller
         
         $expireDate->modify('+2 months');
 
+        $response = new Response();
+
         if ( empty( $this->expireDate ) )
         {
             //$this->expireDate = new Time();
@@ -24,9 +27,9 @@ class ControllerBase extends Controller
         
         $this->response->setExpires($expireDate);
         
-        $this->tag->appendTitle(' - Jinsei');
+        $this->tag->appendTitle(' - Admin');
         
-        $this->view->setTemplateAfter('main');
+        $this->view->setTemplateAfter('admin/admin');
         
         //$staticPages = Pages::query()->where( 'type = 1' )->order( 'position' )->execute();
 
@@ -63,15 +66,16 @@ class ControllerBase extends Controller
         $this->assets
                 ->collection('js')
                 ->addJs('js/jquery-1.11.2.min.js', true)
+                ->addJs('js/jquery-ui.js', true)
                 //->addJs('js/jquery-migrate-1.2.1.min.js', true)
-                //->addJs('js/jquery-ui.min.js', true)
+                //->addJs('js/fileupload/jquery.iframe-transport.js', true)
+                //->addJs('js/fileupload/jquery.fileupload.js', true)
                 ->addJs('js/bootstrap.min.js', true)
                 ->addJs('js/app.js', true)
-                //->addJs('js/angular/controllers.js', true)
                 ->join( true )
-                ->setTargetUri('temp/app.js')
-                ->setTargetPath('temp/app.js')
-                ->addFilter(new Phalcon\Assets\Filters\Jsmin());
+                ->setTargetUri('temp/admin.js')
+                ->setTargetPath('temp/admin.js');
+                //->addFilter(new Phalcon\Assets\Filters\Jsmin());
     }
     
     protected function forward($uri)

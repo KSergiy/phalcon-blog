@@ -6,3 +6,5 @@
         <div class="col-lg-4 col-md-4 col-xs-4"></div>
     </div>
 </footer>
+
+{{ assets.outputJs('js') }}

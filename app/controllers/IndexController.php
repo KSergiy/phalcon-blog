@@ -17,7 +17,17 @@ class IndexController extends ControllerBase
         */
         parent::initialize();
     }
-    
+
+
+    public function pageAction( $lang, $name )
+    {
+        $page = Pages::getPageByName( $name, $lang );
+
+        $this->view->setVars(array('page' => $page));
+
+        parent::initialize();
+    }
+
     public function error404Action()
     {
         $this->response->setHeader('HTTP/1.0 404','Not Found');

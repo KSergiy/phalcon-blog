@@ -6,8 +6,8 @@ return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
         'host'        => 'localhost',
-        'username'    => '',
-        'password'    => '',
+        'username'    => 'retrobazar_base',
+        'password'    => 'winston',
         'dbname'      => 'jinsei',
         'charset'     => 'utf8',
     ),
@@ -23,6 +23,9 @@ return new \Phalcon\Config(array(
         'baseUri'        => '/',
         'publicUrl'      => 'http://jinsei.com.ua',
         'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
+    ),
+    'media' => array(
+        'uploadPath'    => APP_PATH . '/public/images/'
     ),
     'mail' => array(
         'fromName' => '',

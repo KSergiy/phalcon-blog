@@ -1,12 +1,12 @@
 <?php
 
-class PagesController extends ControllerAdmin
+class PublicationsController extends ControllerAdmin
 {
     public function createAction()
     {
-        $this->tag->setTitle('Create Page');
+        $this->tag->setTitle('Create Publication');
 
-        $form = new Pages_PagesForm();
+        $form = new Publications_PublicationsForm();
 
         $this->view->setVar('pageForm', $form);
 
@@ -17,7 +17,7 @@ class PagesController extends ControllerAdmin
     {
         if ($this->request->isPost() == true)
         {
-            $form = new Pages_LocalizationForm;
+            $form = new Publications_LocalizationForm;
 
             // Validate the form
             $data = $this->request->getPost();
@@ -29,13 +29,13 @@ class PagesController extends ControllerAdmin
                     $this->flash->error( $message );
                 }
 
-                return $this->response->redirect("pages/addlocalization/" . $data['page_id']);
+                return $this->response->redirect("publications/addlocalization/" . $data['page_id']);
             }
 
-            $info = new PagesInfo();
+            $info = new PublicationsInfo();
 
             $info->title = $data['title'];
-            $info->page_id = $data['page_id'];
+            $info->publication_id = $data['page_id'];
             $info->content = $data['content'];
             $info->meta_title = $data['title'];
             $info->meta_keywords = $data['metaKeywords'];
@@ -43,15 +43,15 @@ class PagesController extends ControllerAdmin
 
             if ( $info->save() != false )
             {
-                $pLang = new PagesLangs();
+                $pLang = new PublicationsLangs();
 
-                $pLang->page_id = $data['page_id'];
+                $pLang->publication_id = $data['page_id'];
                 $pLang->info_id = $info->id;
                 $pLang->lang_id = $data['lang'];
 
                 $pLang->save();
 
-                return $this->response->redirect( 'pages/edit/' . $data['page_id'] . '/' . $data['lang'] );
+                return $this->response->redirect( 'publications/edit/' . $data['page_id'] . '/' . $data['lang'] );
             }
         }
 
@@ -65,7 +65,7 @@ class PagesController extends ControllerAdmin
         $this->view->setVars(
             array(
                 'id' => $id,
-                'pageForm' => new Pages_LocalizationForm( $langDB )
+                'pageForm' => new Publications_LocalizationForm( $langDB )
             )
         );
 
@@ -74,11 +74,11 @@ class PagesController extends ControllerAdmin
 
     public function listAction()
     {
-        $this->tag->setTitle('List of all pages');
+        $this->tag->setTitle('List of all publications');
 
-        $pages = Pages::find();
+        $publications = Publications::find();
 
-        $this->view->setVars(array('pages' => $pages));
+        $this->view->setVars(array('pages' => $publications));
 
         parent::initialize();
     }
@@ -87,14 +87,14 @@ class PagesController extends ControllerAdmin
     {
         $this->tag->setTitle('Edit page');
 
-        $pageDB = Pages::getPage( $idGet, $langGet );
+        $pageDB = Publications::getPublication( $idGet, $langGet );
 
         if ( $pageDB != false )
         {
             $this->view->setVars(
                 array(
                     'page' => $pageDB,
-                    'pageForm' => new Pages_PagesForm( $pageDB, true )
+                    'pageForm' => new Publications_PublicationsForm( $pageDB, true )
                 )
             );
         }
@@ -104,28 +104,28 @@ class PagesController extends ControllerAdmin
 
     public function deleteAction( $id )
     {
-        $page = Pages::findFirst( $id );
+        $publication = Publications::findFirst( $id );
 
-        if ( $page != false )
+        if ( $publication != false )
         {
-            $page->PagesInfo->delete();
+            $publication->PublicationsInfo->delete();
 
-            $page->PagesLangs->delete();
+            $publication->PublicationsLangs->delete();
 
-            $page->delete();
+            $publication->delete();
         }
 
-        return $this->responce->redirect('/pages/list/');
+        return $this->responce->redirect('publications/list/');
     }
 
     public function addAction()
     {
         if ($this->request->isPost() != true)
         {
-            return $this->response->redirect( 'pages/create/' );
+            return $this->response->redirect( 'publications/create/' );
         }
 
-        $form = new Pages_PagesForm;
+        $form = new Publications_PublicationsForm;
 
         // Validate the form
         $data = $this->request->getPost();
@@ -140,41 +140,42 @@ class PagesController extends ControllerAdmin
             return $this->dispatcher->forward(["action" => "create", 'params' => array('pages') ]);
         }
 
-        $page = new Pages();
+        $publication = new Publications();
 
-        $page->location = $data['location'];
-        $page->type = $data['type'];
-        $page->status = 0;
-        $page->position = 0;
-        $page->name = $data['name'];
+        $publication->location = $data['location'];
+        $publication->status = 0;
+        $publication->sort = 0;
+        $publication->name = $data['name'];
+        $publication->url  = $data['name'];
 
-        if ( $page->save() != false )
+        if ( $publication->save() != false )
         {
-            $info = new PagesInfo();
+            $info = new PublicationsInfo();
 
-            $info->title = $data['title'];
-            $info->page_id = $page->id;
-            $info->content = $data['content'];
-            $info->meta_title = $data['title'];
-            $info->meta_keywords = $data['metaKeywords'];
+            $info->publication_id = $publication->id;
+
+            $info->title    = $data['title'];
+            $info->content  = $data['content'];
+            $info->meta_title       = $data['title'];
+            $info->meta_keywords    = $data['metaKeywords'];
             $info->meta_description = $data['metaDescription'];
 
             if ( $info->save() != false )
             {
-                $pLang = new PagesLangs();
+                $pLang = new PublicationsLangs();
 
-                $pLang->page_id = $page->id;
+                $pLang->publication_id = $publication->id;
                 $pLang->info_id = $info->id;
                 $pLang->lang_id = $data['lang'];
 
                 $pLang->save();
 
-                return $this->response->redirect( 'pages/edit/' . $page->id . '/' . $data['lang'] );
+                return $this->response->redirect( 'publications/edit/' . $publication->id . '/' . $data['lang'] );
             }
             else
             {
                 echo "Error, can't store page info right now: \n";
-                foreach ( $page->getMessages() as $message ) {
+                foreach ( $info->getMessages() as $message ) {
                     echo $message, "\n";
                 }
             }
@@ -182,7 +183,7 @@ class PagesController extends ControllerAdmin
         else
         {
             echo "Error, can't store page right now: \n";
-            foreach ( $page->getMessages() as $message ) {
+            foreach ( $publication->getMessages() as $message ) {
                 echo $message, "\n";
             }
         }
@@ -190,12 +191,12 @@ class PagesController extends ControllerAdmin
 
     public function saveAction()
     {
-        if ( $this->request->isPost() != true)
+        if ($this->request->isPost() != true)
         {
-            return $this->response->redirect( 'pages/list/' );
+            return $this->response->redirect( 'publications/list/' );
         }
 
-        $form = new Pages_PagesForm;
+        $form = new Publications_PublicationsForm;
 
         // Validate the form
         $data = $this->request->getPost();
@@ -206,21 +207,20 @@ class PagesController extends ControllerAdmin
             {
                 $this->flash->error( $message );
             }
-            return $this->forward( '/pages/create/' );
+            return $this->forward( 'publications/create/' );
         }
 
-        $page = Pages::findFirst( $data['id'] );
+        $publication = Publications::findFirst( $data['id'] );
 
-        $page->location = $data['location'];
-        $page->type = $data['type'];
-        $page->name = $data['name'];
+        $publication->location = $data['location'];
+        $publication->name = $data['name'];
 
-        $langDB = PagesLangs::findFirst(array(
+        $langDB = PublicationsLangs::findFirst(array(
             'conditions' => 'page_id = ?1 AND lang_id = ?2',
             'bind'  => array( 1 => $data['id'], 2 => $data['lang'] )
         ));
 
-        $info = PagesInfo::findFirst(array(
+        $info = PublicationsInfo::findFirst(array(
             "conditions" => "id = ?1",
             "bind"       => array( 1 => $langDB->info_id ),
             //"cache"      => array( "key" => 'catalog'.$url, "lifetime" => 172800 )
@@ -233,50 +233,6 @@ class PagesController extends ControllerAdmin
         $info->meta_description = $data['metaDescription'];
         $info->save();
 
-        return $this->response->redirect( 'pages/edit/' . $page->id . '/' . $data['lang'] );
-    }
-
-    public function uploadAction()
-    {
-        if ( !$this->request->isPost() )
-        {
-            return NULL;
-        }
-
-        /** @var \Phalcon\Config $config */
-        $config = $this->getDI()->get('config');
-
-        if ( !$this->request->hasFiles() )
-        {
-            return NULL;
-        }
-
-        $uploads = $this->request->getUploadedFiles();
-
-        foreach ( $uploads as $key => $upload )
-        {
-            $path = $config->media->uploadPath . md5(uniqid(rand(), true)).'-'.strtolower($upload->getname());
-
-            if ( $upload->moveTo($path) )
-            {
-                $result = 'ok';
-
-                $mImage = Images::findFirst(array(
-                    "conditions" => "ovner_id = ?1 AND main = 1",
-                    "bind"       => array( 1 => $this->request->getPost('ovner') )
-                ));
-
-                $image = new Images();
-
-                $image->ovner_id = $this->request->getPost('ovner');
-                $image->url = $path;
-                $image->main = ( !empty($mImage) ) ? '0' : '1';
-                $image->position = $key;
-
-                $image->save();
-            }
-        }
-
-        return $result;
+        return $this->response->redirect( 'publications/edit/' . $publication->id . '/' . $data['lang'] );
     }
 }

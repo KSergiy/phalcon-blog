@@ -10,15 +10,22 @@ $router->add("/", array(
     'action'     => 'index'
 ))->setName('home');
 
-$router->add("/about.html", array(
-    'controller' => 'info',
-    'action'     => 'info'
-))->setName('info');
+$router->add('/{lang}/page/{page}.html', array(
+    'controller' => 'index',
+    'action'     => 'page',
+    'lang'       => 1,
+    'page'       => 2
+));
 
 $router->add("/admin/", array(
     'controller' => 'admin',
     'action'     => 'admin'
 ))->setName('admin');
+
+$router->add('/images/{controller}/{action}/', array(
+    'controller' => 1,
+    'action'     => 2
+));
 
 $router->add('/pages/{action}/{id}', array(
     'controller' => 'pages',
@@ -29,6 +36,20 @@ $router->add('/pages/{action}/{id}', array(
 
 $router->add('/pages/{action}/{id}/{lang}', array(
     'controller' => 'pages',
+    'action'     => 1,
+    'id'         => 2,
+    'lang'       => 3
+));
+
+$router->add('/publications/{action}/{id}', array(
+    'controller' => 'publications',
+    'action'     => 1,
+    'id'         => 2,
+    'lang'       => 3
+));
+
+$router->add('/publications/{action}/{id}/{lang}', array(
+    'controller' => 'publications',
     'action'     => 1,
     'id'         => 2,
     'lang'       => 3

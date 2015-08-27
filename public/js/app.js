@@ -1,12 +1,34 @@
 $(function() {
-    if ( $('TextArea').is( '#areacontent' ) )
-    {
+/*
+    if ( $('input').is('#fileupload') ) {
+
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            add: function(e, data) {
+
+            },
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo(document.body);
+                });
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        });
+    }
+*/
+    if ( $('TextArea').is( '#areacontent' ) ) {
         tinymce.init({
             selector: "#areacontent"
         });
     }
-});
 
+});
 
 var rusChars = new Array
 ('à','á','â','ã','ä','å','¸','æ','ç','è','³','¿','é','ê','ë','ì','í','î','ï','ð','ñ','ò','ó','ô','õ','÷','ö','ø','ù','ý','þ','\ÿ','û','ú','ü',' ','\'','\"','\#','\$','\%','\&','\*','\,','\:','\;','\<','\>','\?','\[','\]','\^','\{','\}','\|','\!','\@','\(','\)','\-','\=','\+','\/','\\','\.','\¹','\©','\®');
